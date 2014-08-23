@@ -5,26 +5,27 @@ define(function (require) {
         Cell = require('Cell');
 
     function Grid(columns, rows) {
-        this.cells = {};
+        this.cells = [];
 
         this.rows = rows;
         this.columns = columns;
-
-        this.currentX = 0;
-        this.currentY = 0;
     }
 
     $.extend(Grid.prototype, {
 
         createCell: function (column, row) {
-            var cell = new Cell(column, row, this.currentX, this.currentY);
-            this.cells[cell.getID()] = cell;
+            var cell = new Cell(column, row);
+            this.cells.push(cell);
             return cell;
         },
 
         render: function (ctx, frame, players) {
-            for (var i in this.cells) {
+            var i = 0,
+                l = this.cells.length;
+
+            while (i < l) {
                 this.cells[i].render(ctx, frame, players);
+                i += 1;
             }
         },
 
@@ -37,17 +38,10 @@ define(function (require) {
                 while (column < this.columns) {
                     cell = this.createCell(column, row);
                     column += 1;
-
-                    // new column
-                    this.currentX += Cell.getWidth();
                 }
 
                 column = 0;
                 row += 1;
-
-                // new row
-                this.currentX = 0;
-                this.currentY += Cell.getHeight();
             }
         }
     });
