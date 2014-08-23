@@ -3,6 +3,10 @@
     border-radius: 3px;
 }
 
+.btn.selected {
+    background: #999;
+}
+
 .btn.right,
 .btn.left {
     margin: 0;

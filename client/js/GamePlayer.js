@@ -1,15 +1,31 @@
 /* global: jQuery, strategypy */
 (function ($, Game, GamePlayerControls) {
 
-    function GamePlayer($canvas, game) {
+    function GamePlayer($canvas) {
         this.fps = 30;
+
+        this.timeout = undefined;
         this.isPlaying = false;
         this.frameCount = 0;
         this.currentFrame = 0;
+
         this.game = new Game();
         this.$canvas = $canvas;
+        this.context = $canvas[0].getContext('2d');
+
+        this.frameRenderer = function () {
+            this.renderCurrentFrame();
+
+            if (this.currentFrame === this.frameCount) {
+                this.stop();
+            } else {
+                // go to next frame and render it
+                this.currentFrame += 1;
+                this.play();
+            }
+        }.bind(this);
+
         this.controls = new GamePlayerControls(this);
-        this.controls.initialize();
     }
 
     $.extend(GamePlayer.prototype, {
@@ -20,68 +36,44 @@
 
             this.frameCount = data.frames.length;
 
+            this.controls.initialize();
             this.controls.render();
 
             this.game.initialize(data, width, height);
-            this.game.renderFrame(this.getGameContext(), 0);
-        },
-
-        getGameContext: function () {
-            return this.$canvas[0].getContext('2d');
+            this.renderCurrentFrame();
         },
 
         setFPS: function (fps) {
             this.fps = fps;
         },
 
-        renderFrame: function (context) {
-            this.game.renderFrame(context, this.currentFrame);
-        },
-
-        resume: function () {
-            // TODO
+        renderCurrentFrame: function () {
+            this.game.renderFrame(this.context, this.currentFrame);
         },
 
         pause: function () {
-            // TODO
+            clearTimeout(this.timeout);
+            this.isPlaying = false;
+            this.controls.render();
         },
 
-        reset: function (fps) {
-            if (fps) {
-                this.setFPS(fps);
-            }
-
+        stop: function () {
+            clearTimeout(this.timeout);
+            this.isPlaying = false;
             this.currentFrame = 0;
+            this.renderCurrentFrame();
+            this.controls.render();
+        },
+
+        start: function () {
+            this.play();
+            this.controls.render();
         },
 
         play: function () {
-            var context = this.getGameContext();
-
-            if (!this.isPlaying) {
-                this.isPlaying = true;
-
-                // TODO: change to setTimeout for pause/resume and frame switching
-                this.interval = setInterval(function () {
-                    this.renderFrame(context);
-
-                    if (this.currentFrame === this.frameCount) {
-                        // end replay
-                        clearInterval(this.interval);
-
-                        this.isPlaying = false;
-                        this.currentFrame = 0;
-
-                        this.controls.render();
-                    } else {
-                        // go to next frame
-                        this.currentFrame += 1;
-                    }
-                }.bind(this), 1000 / this.fps);
-
-                this.controls.render();
-            }
+            this.isPlaying = true;
+            this.timeout = setTimeout(this.frameRenderer, 1000 / this.fps);
         }
-
     });
 
     strategypy.GamePlayer = GamePlayer;
