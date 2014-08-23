@@ -20,6 +20,14 @@ define(function (require) {
 
     $.extend(Player.prototype, {
 
+        getName: function () {
+            return this.data.name;
+        },
+
+        getColor: function () {
+            return this.color;
+        },
+
         hasBotInPositionAtFrame: function (frame, x, y) {
             var frameBots = this.getBotsForFrame(frame);
             return (frameBots && frameBots[x] && frameBots[x][y]);

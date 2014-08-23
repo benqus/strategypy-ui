@@ -10,7 +10,7 @@ require(['jquery', 'GamePlayer'], function ($, GamePlayer) {
     var gamePlayer;
 
     function documentReady() {
-        gamePlayer = new GamePlayer($('#strategypy'));
+        gamePlayer = new GamePlayer($('#strategypy'), $('#legend'));
 
         $.getJSON('example.json')
             .done(gamePlayer.initialize.bind(gamePlayer));

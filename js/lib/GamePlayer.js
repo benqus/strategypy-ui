@@ -5,7 +5,19 @@ define(function (require) {
         Game = require('Game'),
         GamePlayerControls = require('GamePlayerControls');
 
-    function GamePlayer($canvas) {
+    function frameRenderer() {
+        this.renderCurrentFrame();
+
+        if (this.currentFrame === this.frameCount) {
+            this.stop();
+        } else {
+            // go to next frame and render it
+            this.currentFrame += 1;
+            this.play();
+        }
+    }
+
+    function GamePlayer($canvas, $legend) {
         this.fps = 30;
 
         this.timeout = undefined;
@@ -14,20 +26,11 @@ define(function (require) {
         this.currentFrame = 0;
 
         this.game = new Game();
+        this.$legend = $legend;
         this.$canvas = $canvas;
         this.context = $canvas[0].getContext('2d');
 
-        this.frameRenderer = function () {
-            this.renderCurrentFrame();
-
-            if (this.currentFrame === this.frameCount) {
-                this.stop();
-            } else {
-                // go to next frame and render it
-                this.currentFrame += 1;
-                this.play();
-            }
-        }.bind(this);
+        this.frameRenderer = frameRenderer.bind(this);
 
         this.controls = new GamePlayerControls(this);
     }
@@ -44,11 +47,34 @@ define(function (require) {
             this.controls.render();
 
             this.game.initialize(data, width, height);
+
+            this.renderLegend();
             this.renderCurrentFrame();
         },
 
         setFPS: function (fps) {
             this.fps = fps;
+        },
+
+        renderLegend: function () {
+            var players = this.game.getPlayers(),
+                items = [],
+                player,
+                i;
+
+            for (i in players) {
+                player = players[i];
+                items.push(
+                    '<div class="item">',
+                        '<span style="background-color:' + player.getColor() + ';"></span>',
+                        player.getName(),
+                    '</div>'
+                );
+            }
+
+            this.$legend.html(
+                items.join('')
+            );
         },
 
         renderCurrentFrame: function () {

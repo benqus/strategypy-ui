@@ -12,6 +12,11 @@ define(function (require) {
     }
 
     $.extend(Game.prototype, {
+
+        getPlayers: function () {
+            return this.players;
+        },
+
         createPlayers: function (allPlayers) {
             for (var i in allPlayers) {
                 this.players[i] = new Player(i, allPlayers[i]);

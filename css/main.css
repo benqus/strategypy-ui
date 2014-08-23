@@ -11,6 +11,13 @@ body {
     margin: 0 auto;
 }
 
+.legend .item span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+}
+
 .btn {
     border: 1px solid #666;
     border-radius: 3px;
