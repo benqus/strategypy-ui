@@ -55,6 +55,29 @@ define(function (require) {
             this.game.renderFrame(this.context, this.currentFrame);
         },
 
+        jumpFrameBy: function (count) {
+            var nextFrame = this.currentFrame + count;
+
+            this.pause();
+
+            if (nextFrame < 0) {
+                nextFrame = 0;
+            } else if (nextFrame > (this.frameCount - 1)) {
+                nextFrame = this.frameCount - 1;
+            }
+            this.currentFrame = nextFrame;
+
+            this.renderCurrentFrame();
+        },
+
+        forward: function () {
+            this.jumpFrameBy(1);
+        },
+
+        backward: function () {
+            this.jumpFrameBy(-1);
+        },
+
         pause: function () {
             clearTimeout(this.timeout);
             this.isPlaying = false;
