@@ -2,7 +2,7 @@ requirejs.config({
     baseUrl: './js/lib',
 
     paths: {
-        jquery: '../../node_modules/jquery/dist/jquery'
+        jquery: '../../pages/jquery/jquery'
     }
 });
 
