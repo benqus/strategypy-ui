@@ -1,5 +1,8 @@
-/* global: strategypy */
-(function ($, Cell) {
+define(function (require) {
+    'use strict';
+
+    var $ = require('jquery'),
+        Cell = require('Cell');
 
     function Grid(columns, rows) {
         this.cells = {};
@@ -49,9 +52,5 @@
         }
     });
 
-    strategypy.Grid = Grid;
-
-}(
-    jQuery,
-    strategypy.Cell
-));
+    return Grid;
+});

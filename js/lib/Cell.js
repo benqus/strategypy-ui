@@ -1,5 +1,7 @@
-/* global: strategypy */
-(function ($) {
+define(function (require) {
+    'use strict';
+
+    var $ = require('jquery');
 
     var cellHeight = 0,
         cellWidth = 0,
@@ -52,8 +54,5 @@
         }
     });
 
-    strategypy.Cell = Cell;
-
-}(
-    jQuery
-));
+    return Cell;
+});

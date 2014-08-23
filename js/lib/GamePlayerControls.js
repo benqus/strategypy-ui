@@ -1,5 +1,7 @@
-/* global: jQuery, strategypy */
-(function ($) {
+define(function (require) {
+    'use strict';
+
+    var $ = require('jquery');
 
     function GamePlayerControls(gamePlayer) {
         this.gamePlayer = gamePlayer;
@@ -83,8 +85,5 @@
         }
     });
 
-    strategypy.GamePlayerControls = GamePlayerControls;
-
-}(
-    jQuery
-));
+    return GamePlayerControls;
+});

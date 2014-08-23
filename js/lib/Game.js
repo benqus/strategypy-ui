@@ -1,5 +1,10 @@
-/* global: jQuery, strategypy */
-(function ($, Player, Cell, Grid) {
+define(function (require) {
+    'use strict';
+
+    var $ = require('jquery'),
+        Grid = require('Grid'),
+        Cell = require('Cell'),
+        Player = require('Player');
 
     function Game() {
         this.grid = undefined;
@@ -44,11 +49,5 @@
         }
     });
 
-    strategypy.Game = Game;
-
-}(
-    jQuery,
-    strategypy.Player,
-    strategypy.Cell,
-    strategypy.Grid
-));
+    return Game;
+});

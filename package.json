@@ -1,0 +1,26 @@
+{
+  "name": "strategypy-ui",
+  "version": "0.1.0",
+  "description": "Browser UI (player) for strategypy",
+  "main": "dist/strategy-ui.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benqus/strategypy-ui.git"
+  },
+  "keywords": [
+    "strategypy"
+  ],
+  "author": "Bence Kormos <ben.kormos@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benqus/strategypy-ui/issues"
+  },
+  "homepage": "https://github.com/benqus/strategypy-ui",
+  "devDependencies": {
+    "font-awesome": "^4.1.0",
+    "jquery": "^2.1.1",
+    "requirejs": "^2.1.14"
+  }
+}

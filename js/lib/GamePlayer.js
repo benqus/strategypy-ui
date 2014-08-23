@@ -1,5 +1,9 @@
-/* global: jQuery, strategypy */
-(function ($, Game, GamePlayerControls) {
+define(function (require) {
+    'use strict';
+
+    var $ = require('jquery'),
+        Game = require('Game'),
+        GamePlayerControls = require('GamePlayerControls');
 
     function GamePlayer($canvas) {
         this.fps = 30;
@@ -76,10 +80,5 @@
         }
     });
 
-    strategypy.GamePlayer = GamePlayer;
-
-}(
-    jQuery,
-    strategypy.Game,
-    strategypy.GamePlayerControls
-));
+    return GamePlayer;
+});
