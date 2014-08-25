@@ -45,7 +45,7 @@ define(function (require) {
                 return;
             }
 
-            if ($button.hasClass('stop')) {
+            if ($button.hasClass('stop') && this.gamePlayer.isPlaying) {
                 this.gamePlayer.stop();
                 return;
             }
@@ -96,7 +96,7 @@ define(function (require) {
                 '<button class="btn forward">' +
                     '<span class="fa fa-forward"></span>' +
                 '</button>' +
-                '<button class="btn stop">' +
+                '<button class="btn stop" ' + (!isPlaying ? 'disabled' : '') + '>' +
                     '<span class="fa fa-stop"></span>' +
                     '&nbsp;Stop' +
                 '</button>' +
